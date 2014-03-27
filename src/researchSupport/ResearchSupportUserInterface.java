@@ -134,7 +134,7 @@ public class ResearchSupportUserInterface {
                     RSA.listAllCitationChains();
                     break;
                 case 'O':
-                    RSA.listAllReferenceChains(pTUI.inputPaperName());
+                    RSA.listAllReferenceChains();
                     break;
 
                 case 'T':
@@ -142,7 +142,11 @@ public class ResearchSupportUserInterface {
                     System.out.println("Now enter - number of levels required : ");
                     numOfGens = scan.nextInt();
                     scan.nextLine();
+                    if(numOfGens < 5 && numOfGens > 0){
                     RSA.listNCitations(name, numOfGens);
+                    }else{
+                        System.out.println("Number must be between 1-4");
+                    }
                     break;
                 case 'U':
                     name = pTUI.inputPaperName();

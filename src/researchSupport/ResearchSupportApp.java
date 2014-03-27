@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import javax.sound.midi.Soundbank;
 
 /**
  * Maintains a collection of research papers. Provides functionality to add a
@@ -45,8 +44,12 @@ public class ResearchSupportApp {
         }
     }
 
-    public void listAllReferenceChains(String title) {
-
+    public void listAllReferenceChains() {
+        for(String currentPaper : papers.keySet()){
+            if(papers.get(currentPaper).checkIfRoot()){
+                listNReferences(currentPaper, 100);
+            }
+        }
     }
 
     public void listAllCitationChains() {
@@ -55,8 +58,9 @@ public class ResearchSupportApp {
 
     public void listNReferences(String title, int numberOfGenerations) {
         if (numberOfGenerations == 1) {
+            System.out.println("References level 1");
             listDirectReferences(title);
-        } else if (numberOfGenerations > 1 && numberOfGenerations < 5) {
+        } else if (numberOfGenerations > 1) {
             Set<String> titleSet = new HashSet<>();
             titleSet.add(title);
             listNReferences(titleSet, numberOfGenerations);
@@ -68,11 +72,12 @@ public class ResearchSupportApp {
         System.out.println("References level: " + iterationsRemaining);
         for (String current : refs) {
             // Add all returned references to newRefs list for this level
+            if(papers.get(current).checkIfRoot())continue;
             newRefs.addAll(Arrays.asList(papers.get(current).getDirectReferences()));
             // Print out all returned titles 
             listDirectReferences(current);                         
         }
-        if(iterationsRemaining > 1)listNReferences(newRefs, iterationsRemaining -1);
+        if(iterationsRemaining > 1 && !newRefs.isEmpty())listNReferences(newRefs, iterationsRemaining -1);
     }
 
     public void listNCitations(String title, int numberOfGenerations) {
