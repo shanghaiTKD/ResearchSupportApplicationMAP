@@ -28,25 +28,21 @@ public class ResearchSupportApp {
     }
 
     public void makeLinkToReference(String aPaperName, String refPaperName) {
-        for (Paper current : papers) {
-            if (aPaperName.equals(current.getTitle())) {
-                if(current.checkIfRoot() || )
-                current.addReference(refPaperName);
-            }else if(refPaperName.equals(current.getTitle())){
-                current.addCitation(aPaperName);
-            }
-        }
+        papers.get(aPaperName).addReference(refPaperName);
+        papers.get(refPaperName).addCitation(aPaperName);
     }
 
     public void listDirectReferences(String title) {
-        Paper currentPaper = papers.get(title);
-        for(String currentString : currentPaper.getDirectReferences()){
+        for(String currentString : papers.get(title).getDirectReferences()){
             System.out.println(currentString);
         }
         
     }
 
     public void listDirectCitations(String title) {
+        for(String currentString : papers.get(title).getDirectCitations()){
+            System.out.println(currentString);
+        }
     }
 
     public void listAllReferenceChains(String title) {

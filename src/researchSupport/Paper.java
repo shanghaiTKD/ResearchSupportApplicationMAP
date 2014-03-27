@@ -70,7 +70,10 @@ public class Paper {
         else return false;
     }
     
- 
+    @Override 
+    public String toString(){
+        return "Not done yet";
+    }
 
     
     
